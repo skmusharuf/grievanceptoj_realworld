@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Complaint - Grievance Hub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>Grievance Hub</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="submit-complaint.html">Submit Complaint</a></li>
+                <li><a href="track-complaint.html" class="active">Track Complaint</a></li>
+                <li><a href="admin-login.html">Admin Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container page-container">
+        <h1>Track Your Complaint</h1>
+        <p class="subtitle">Enter your complaint details to track the status of your grievance</p>
+
+        <div class="form-wrapper">
+            <!-- Search Form -->
+            <form id="trackForm" class="form">
+                <fieldset>
+                    <legend>Complaint Tracking</legend>
+                    
+                    <div class="form-group">
+                        <label for="complaint_id">Complaint ID *</label>
+                        <input type="text" id="complaint_id" name="complaint_id" required placeholder="e.g., CMP12345678">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required placeholder="Email used while submitting">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="otp">OTP (Optional)</label>
+                        <input type="text" id="otp" name="otp" placeholder="Leave empty if you don't have it">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="trackBtn">Track Complaint</button>
+                        <button type="reset" class="btn btn-secondary">Clear</button>
+                    </div>
+                </fieldset>
+            </form>
+
+            <!-- Results Section -->
+            <div id="complaintResult" style="display: none;" class="complaint-result">
+                <div class="result-header">
+                    <h2>Complaint Details</h2>
+                    <p class="complaint-id">ID: <strong id="resultComplaintId"></strong></p>
+                </div>
+
+                <div class="result-content">
+                    <!-- Complaint Info -->
+                    <section class="result-section">
+                        <h3>Complaint Information</h3>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <label>Name:</label>
+                                <p id="resultName"></p>
+                            </div>
+                            <div class="info-item">
+                                <label>Email:</label>
+                                <p id="resultEmail"></p>
+                            </div>
+                            <div class="info-item">
+                                <label>Phone:</label>
+                                <p id="resultPhone"></p>
+                            </div>
+                            <div class="info-item">
+                                <label>Category:</label>
+                                <p id="resultCategory"></p>
+                            </div>
+                            <div class="info-item">
+                                <label>Criticality:</label>
+                                <p id="resultCriticality"></p>
+                            </div>
+                            <div class="info-item">
+                                <label>Current Status:</label>
+                                <p id="resultStatus" class="status-badge"></p>
+                            </div>
+                            <div class="info-item">
+                                <label>Locality:</label>
+                                <p id="resultLocality"></p>
+                            </div>
+                            <div class="info-item">
+                                <label>Zone:</label>
+                                <p id="resultZone"></p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Description -->
+                    <section class="result-section">
+                        <h3>Complaint Description</h3>
+                        <p id="resultDescription"></p>
+                    </section>
+
+                    <!-- Status Timeline -->
+                    <section class="result-section">
+                        <h3>Status History</h3>
+                        <div id="statusTimeline" class="timeline">
+                            <!-- Timeline items will be inserted here -->
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div id="errorMessage" style="display: none;" class="alert alert-error"></div>
+
+            <!-- Loading -->
+            <div id="loading" style="display: none;" class="alert alert-info">
+                <p>Loading complaint details...</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Grievance Hub - Hyderabad Municipal Corporation. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/track-complaint.js"></script>
+</body>
+</html>

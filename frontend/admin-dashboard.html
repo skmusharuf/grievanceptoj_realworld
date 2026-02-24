@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Grievance Hub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Grievance Hub</h2>
+                <p id="adminName">Admin</p>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item active" data-section="dashboard">📊 Dashboard</a>
+                <a href="#complaints" class="nav-item" data-section="complaints">📋 All Complaints</a>
+                <a href="#my-assigned" class="nav-item" data-section="my-assigned">📌 My Assigned</a>
+                <a href="#resolved" class="nav-item" data-section="resolved">✅ Resolved</a>
+                <a href="#pending" class="nav-item" data-section="pending">⏳ Pending</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn btn-secondary full-width">Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <h1>Grievance Management System</h1>
+                <div class="header-actions">
+                    <span id="userInfo">Welcome, Admin</span>
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <!-- Dashboard Section -->
+                <section id="dashboard" class="content-section active">
+                    <h2>Dashboard</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalComplaints">0</div>
+                            <div class="stat-label">Total Complaints</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="pendingComplaints">0</div>
+                            <div class="stat-label">Pending</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="inProgressComplaints">0</div>
+                            <div class="stat-label">In Progress</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="resolvedComplaints">0</div>
+                            <div class="stat-label">Resolved</div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <!-- Category Distribution -->
+                        <section class="dashboard-widget">
+                            <h3>Complaints by Category</h3>
+                            <div id="categoryChart" class="chart">
+                                <p style="text-align: center; color: #999;">Loading chart...</p>
+                            </div>
+                        </section>
+
+                        <!-- Recent Complaints -->
+                        <section class="dashboard-widget">
+                            <h3>Recent Complaints</h3>
+                            <div id="recentComplaints" class="complaints-list">
+                                <p style="text-align: center; color: #999;">Loading...</p>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+                <!-- All Complaints Section -->
+                <section id="complaints" class="content-section">
+                    <h2>All Complaints</h2>
+                    
+                    <div class="filters">
+                        <input type="text" id="searchInput" placeholder="Search complaints..." class="search-input">
+                        <select id="statusFilter" class="filter-select">
+                            <option value="all">All Status</option>
+                            <option value="Pending">Pending</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Resolved">Resolved</option>
+                        </select>
+                        <select id="categoryFilter" class="filter-select">
+                            <option value="">All Categories</option>
+                        </select>
+                    </div>
+
+                    <div id="complaintsList" class="complaints-table-wrapper">
+                        <p style="text-align: center; color: #999;">Loading complaints...</p>
+                    </div>
+                </section>
+
+                <!-- My Assigned Section -->
+                <section id="my-assigned" class="content-section">
+                    <h2>My Assigned Complaints</h2>
+                    <div id="assignedList" class="complaints-list">
+                        <p style="text-align: center; color: #999;">Loading...</p>
+                    </div>
+                </section>
+
+                <!-- Resolved Section -->
+                <section id="resolved" class="content-section">
+                    <h2>Resolved Complaints</h2>
+                    <div id="resolvedList" class="complaints-list">
+                        <p style="text-align: center; color: #999;">Loading...</p>
+                    </div>
+                </section>
+
+                <!-- Pending Section -->
+                <section id="pending" class="content-section">
+                    <h2>Pending Complaints</h2>
+                    <div id="pendingList" class="complaints-list">
+                        <p style="text-align: center; color: #999;">Loading...</p>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Complaint Detail Modal -->
+    <div id="complaintModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Complaint Details</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <div id="modalContent">
+                    <!-- Content will be loaded here -->
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button id="updateStatusBtn" class="btn btn-primary">Update Status</button>
+                <button id="closeModalBtn" class="btn btn-secondary">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Message -->
+    <div id="errorMessage" style="display: none;" class="alert alert-error fixed"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/admin-dashboard.js"></script>
+</body>
+</html>

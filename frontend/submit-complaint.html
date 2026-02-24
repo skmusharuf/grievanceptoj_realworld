@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Complaint - Grievance Hub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>Grievance Hub</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="submit-complaint.html" class="active">Submit Complaint</a></li>
+                <li><a href="track-complaint.html">Track Complaint</a></li>
+                <li><a href="admin-login.html">Admin Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container page-container">
+        <h1>Submit Your Complaint</h1>
+        <p class="subtitle">Please provide details about your grievance. Our system will automatically classify and route it to the appropriate department.</p>
+
+        <div class="form-wrapper">
+            <form id="complaintForm" class="form">
+                <!-- Personal Information -->
+                <fieldset>
+                    <legend>Personal Information</legend>
+                    
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required placeholder="Enter your email address">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="aadhar">Aadhar Number</label>
+                        <input type="text" id="aadhar" name="aadhar" placeholder="Enter your Aadhar number (optional)">
+                    </div>
+                </fieldset>
+
+                <!-- Location Information -->
+                <fieldset>
+                    <legend>Location Information</legend>
+                    
+                    <div class="form-group">
+                        <label for="zone">Zone/Area</label>
+                        <select id="zone" name="zone">
+                            <option value="">Select a zone</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="area">Locality/Area *</label>
+                        <select id="area" name="area" required>
+                            <option value="">Select a locality</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="full_address">Full Address</label>
+                        <textarea id="full_address" name="full_address" placeholder="Enter complete address of the issue location"></textarea>
+                    </div>
+                </fieldset>
+
+                <!-- Complaint Details -->
+                <fieldset>
+                    <legend>Complaint Details</legend>
+                    
+                    <div class="form-group">
+                        <label for="description">Complaint Description *</label>
+                        <textarea id="description" name="description" required placeholder="Describe your complaint in detail..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <div id="classificationResult" style="display: none;" class="classification-result">
+                            <p><strong>Classification:</strong></p>
+                            <p>Category: <span id="classified_category">-</span></p>
+                            <p>Criticality: <span id="classified_criticality">-</span></p>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Submit Button -->
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="submitBtn">Submit Complaint</button>
+                    <button type="reset" class="btn btn-secondary">Clear Form</button>
+                </div>
+            </form>
+
+            <!-- Success Message -->
+            <div id="successMessage" style="display: none;" class="alert alert-success">
+                <h3>Complaint Submitted Successfully!</h3>
+                <p><strong>Complaint ID:</strong> <span id="complaintId">-</span></p>
+                <p><strong>Category:</strong> <span id="submittedCategory">-</span></p>
+                <p><strong>Your Tracking OTP:</strong> <span id="trackingOTP">-</span></p>
+                <p style="margin-top: 15px; font-size: 14px; color: #555;">
+                    Save your Complaint ID and OTP to track your complaint status. You can also use the track page with your email address.
+                </p>
+                <div style="margin-top: 20px;">
+                    <a href="track-complaint.html" class="btn btn-primary">Track Your Complaint</a>
+                    <a href="submit-complaint.html" class="btn btn-secondary">Submit Another</a>
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div id="errorMessage" style="display: none;" class="alert alert-error"></div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Grievance Hub - Hyderabad Municipal Corporation. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/submit-complaint.js"></script>
+</body>
+</html>

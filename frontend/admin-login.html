@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Grievance Hub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>Grievance Hub</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="submit-complaint.html">Submit Complaint</a></li>
+                <li><a href="track-complaint.html">Track Complaint</a></li>
+                <li><a href="admin-login.html" class="active">Admin Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container page-container">
+        <div class="login-wrapper">
+            <div class="login-card">
+                <h1>Admin Portal</h1>
+                <p class="subtitle">Sign in to access the admin dashboard</p>
+
+                <form id="loginForm" class="form">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required placeholder="Enter your email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required placeholder="Enter your password">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary full-width" id="loginBtn">Sign In</button>
+                    </div>
+                </form>
+
+                <!-- Error Message -->
+                <div id="errorMessage" style="display: none;" class="alert alert-error"></div>
+
+                <!-- Demo Credentials -->
+                <div class="demo-info">
+                    <h4>Demo Credentials:</h4>
+                    <p><strong>Super Admin:</strong></p>
+                    <p>Email: superadmin@grievancehub.com<br>Password: SuperAdmin@123</p>
+                    <p style="margin-top: 10px;"><strong>Sub Admin (Zone 1):</strong></p>
+                    <p>Email: subadmin_zone1@grievancehub.com<br>Password: SubAdmin@123</p>
+                    <p style="margin-top: 10px;"><strong>Department Admin:</strong></p>
+                    <p>Email: deptadmin_circle1@grievancehub.com<br>Password: DeptAdmin@123</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Grievance Hub - Hyderabad Municipal Corporation. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/admin-login.js"></script>
+</body>
+</html>
