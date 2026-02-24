@@ -3,78 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grievance Hub - Citizen Complaint Management System</title>
+    <title>GrievanceHub - Your Voice Matters</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <h1>Grievance Hub</h1>
+    <main class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+        <!-- Navigation -->
+        <nav class="border-b border-slate-700 bg-slate-900-50 backdrop-blur-sm sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4v2m0 4v2M7.08 6.47a7 7 0 1114.84 0"></path>
+                    </svg>
+                    <span class="text-xl font-bold text-white">GrievanceHub</span>
+                </div>
+                <div class="flex gap-4">
+                    <a href="admin-login.html">
+                        <button class="text-slate-300 hover:text-white px-4 py-2">Admin</button>
+                    </a>
+                </div>
             </div>
-            <ul class="nav-links">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="submit-complaint.html">Submit Complaint</a></li>
-                <li><a href="track-complaint.html">Track Complaint</a></li>
-                <li><a href="admin-login.html">Admin Login</a></li>
-            </ul>
-        </div>
-    </nav>
+        </nav>
 
-    <main>
-        <section class="hero">
-            <div class="container">
-                <h2>Your Voice Matters</h2>
-                <p>Report grievances, track progress, and get your complaints resolved efficiently</p>
-                <div class="hero-actions">
-                    <a href="submit-complaint.html" class="btn btn-primary">Submit a Complaint</a>
-                    <a href="track-complaint.html" class="btn btn-secondary">Track Your Complaint</a>
+        <!-- Hero Section -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">Your Voice Matters</h1>
+                <p class="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
+                    Submit grievances easily, track progress in real-time, and get resolutions faster with our intelligent redressal system.
+                </p>
+                <div class="flex gap-4 justify-center flex-wrap">
+                    <a href="submit-complaint.html">
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium flex items-center gap-2">
+                            Submit Complaint
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                            </svg>
+                        </button>
+                    </a>
+                    <a href="track-complaint.html">
+                        <button class="border-2 border-slate-600 text-white hover:bg-slate-800 bg-transparent px-6 py-3 rounded-lg font-medium">
+                            Track Complaint
+                        </button>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-20">
+                <div class="bg-slate-800 border border-slate-700 hover:border-blue-500 transition-colors rounded-lg p-6">
+                    <svg class="w-8 h-8 text-blue-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <h3 class="font-bold text-white mb-2">Easy Submission</h3>
+                    <p class="text-slate-400">Submit complaints with text or voice in multiple languages</p>
+                </div>
+
+                <div class="bg-slate-800 border border-slate-700 hover:border-blue-500 transition-colors rounded-lg p-6">
+                    <svg class="w-8 h-8 text-blue-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                    <h3 class="font-bold text-white mb-2">Smart Classification</h3>
+                    <p class="text-slate-400">AI-powered categorization and priority detection</p>
+                </div>
+
+                <div class="bg-slate-800 border border-slate-700 hover:border-blue-500 transition-colors rounded-lg p-6">
+                    <svg class="w-8 h-8 text-blue-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                    <h3 class="font-bold text-white mb-2">Real-time Tracking</h3>
+                    <p class="text-slate-400">Monitor your complaint status anytime, anywhere</p>
+                </div>
+
+                <div class="bg-slate-800 border border-slate-700 hover:border-blue-500 transition-colors rounded-lg p-6">
+                    <svg class="w-8 h-8 text-blue-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4v2m0 4v2M7.08 6.47a7 7 0 1114.84 0"></path>
+                    </svg>
+                    <h3 class="font-bold text-white mb-2">Secure & Private</h3>
+                    <p class="text-slate-400">OTP verification and encrypted data storage</p>
                 </div>
             </div>
         </section>
 
-        <section class="features">
-            <div class="container">
-                <h2>How It Works</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">📝</div>
-                        <h3>Submit Complaint</h3>
-                        <p>Fill out a simple form with your complaint details and receive a unique ID</p>
+        <!-- Stats Section -->
+        <section class="bg-slate-800-50 border-y border-slate-700 py-16 mt-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div>
+                        <div class="text-4xl font-bold text-blue-500 mb-2">10,000+</div>
+                        <p class="text-slate-400">Complaints Resolved</p>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🔍</div>
-                        <h3>Track Status</h3>
-                        <p>Monitor your complaint status in real-time using your Complaint ID and OTP</p>
+                    <div>
+                        <div class="text-4xl font-bold text-blue-500 mb-2">98%</div>
+                        <p class="text-slate-400">Satisfaction Rate</p>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">✅</div>
-                        <h3>Quick Resolution</h3>
-                        <p>Get updates via email when your complaint is processed and resolved</p>
+                    <div>
+                        <div class="text-4xl font-bold text-blue-500 mb-2">24/7</div>
+                        <p class="text-slate-400">Support Available</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="info">
-            <div class="container">
-                <h2>Supported Categories</h2>
-                <ul class="categories-list">
-                    <li>CM Office (Miscellaneous)</li>
-                    <li>Development Authority</li>
-                    <li>Municipal Services</li>
-                    <li>Police/Safety</li>
-                    <li>Public Works Department</li>
-                    <li>Transport Services</li>
-                </ul>
+        <!-- Footer -->
+        <footer class="bg-slate-900 border-t border-slate-700 py-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-slate-400">
+                <p>&copy; 2025 GrievanceHub. All rights reserved.</p>
             </div>
-        </section>
+        </footer>
     </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Grievance Hub - Hyderabad Municipal Corporation. All rights reserved.</p>
-        </div>
-    </footer>
 </body>
 </html>
