@@ -1,0 +1,192 @@
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║           EXACT FOLDER AND FILE STRUCTURE - COPY THIS LAYOUT                  ║
+║                                                                                 ║
+║  This shows the EXACT structure you need to create.                           ║
+║  Use this as a reference while copying files.                                 ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+
+YOUR PROJECT FOLDER (Example: /path/to/grievance_hub/)
+│
+├── 📁 BACKEND/
+│   │
+│   ├── 📁 app/
+│   │   ├── __init__.py                 ← Flask app initialization
+│   │   ├── models.py                   ← 9 Database models
+│   │   ├── utils.py                    ← Helper functions
+│   │   │
+│   │   └── 📁 routes/
+│   │       ├── __init__.py             ← Empty
+│   │       ├── auth_routes.py          ← Auth endpoints
+│   │       ├── complaint_routes.py     ← Complaint endpoints
+│   │       ├── admin_routes.py         ← Admin endpoints
+│   │       └── zone_routes.py          ← Zone endpoints
+│   │
+│   ├── 📁 scripts/
+│   │   ├── __init__.py                 ← Empty
+│   │   └── seed_db.py                  ← Database seeding
+│   │
+│   ├── run.py                          ← ⭐ START BACKEND HERE
+│   ├── requirements.txt                ← Python libraries
+│   └── .env.example                    ← Environment vars
+│
+├── 📁 FRONTEND/
+│   │
+│   ├── index.html                      ← Home page
+│   ├── submit-complaint.html           ← Submit form page
+│   ├── track-complaint.html            ← Track status page
+│   ├── admin-login.html                ← Admin login page
+│   ├── admin-dashboard.html            ← Admin dashboard page
+│   │
+│   ├── 📁 css/
+│   │   └── style.css                   ← All styling (934 lines)
+│   │
+│   └── 📁 js/
+│       ├── config.js                   ← API configuration
+│       ├── submit-complaint.js         ← Submit form logic
+│       ├── track-complaint.js          ← Track logic
+│       ├── admin-login.js              ← Login logic
+│       └── admin-dashboard.js          ← Dashboard logic
+│
+├── 📁 data/                            ← AUTO-CREATED (do not manually create)
+│   └── grievance_hub.db                ← SQLite database (auto-created)
+│
+├── 📁 models/                          ← AUTO-CREATED (do not manually create)
+│   └── *.pkl                           ← ML models (auto-created)
+│
+└── 📁 public/                          ← Optional (for images)
+    └── 📁 images/                      ← Optional (for images)
+
+
+═════════════════════════════════════════════════════════════════════════════════
+FILE CREATION CHECKLIST
+═════════════════════════════════════════════════════════════════════════════════
+
+BACKEND FILES (13 total):
+═════════════════════════
+☐ backend/run.py                        [Main server - 40 lines]
+☐ backend/requirements.txt              [Dependencies]
+☐ backend/.env.example                  [Environment template]
+☐ backend/app/__init__.py               [App factory - 60 lines]
+☐ backend/app/models.py                 [Models - 240 lines]
+☐ backend/app/utils.py                  [Utils - 200 lines]
+☐ backend/app/routes/__init__.py        [Empty]
+☐ backend/app/routes/auth_routes.py     [Auth - 190 lines]
+☐ backend/app/routes/complaint_routes.py[Complaints - 240 lines]
+☐ backend/app/routes/admin_routes.py    [Admin - 270 lines]
+☐ backend/app/routes/zone_routes.py     [Zones - 90 lines]
+☐ backend/scripts/__init__.py           [Empty]
+☐ backend/scripts/seed_db.py            [Seeding - 180 lines]
+
+FRONTEND FILES (11 total):
+══════════════════════════
+☐ frontend/index.html                   [Home - 81 lines]
+☐ frontend/submit-complaint.html        [Submit - 134 lines]
+☐ frontend/track-complaint.html         [Track - 139 lines]
+☐ frontend/admin-login.html             [Login - 73 lines]
+☐ frontend/admin-dashboard.html         [Dashboard - 160 lines]
+☐ frontend/css/style.css                [Styling - 934 lines]
+☐ frontend/js/config.js                 [Config - 91 lines]
+☐ frontend/js/submit-complaint.js       [Logic - 146 lines]
+☐ frontend/js/track-complaint.js        [Logic - 101 lines]
+☐ frontend/js/admin-login.js            [Logic - 47 lines]
+☐ frontend/js/admin-dashboard.js        [Logic - 367 lines]
+
+TOTAL: 24 FILES
+
+
+═════════════════════════════════════════════════════════════════════════════════
+FOLDER CREATION ORDER
+═════════════════════════════════════════════════════════════════════════════════
+
+Create folders in this order:
+
+1. backend/
+2. backend/app/
+3. backend/app/routes/
+4. backend/scripts/
+5. frontend/
+6. frontend/css/
+7. frontend/js/
+8. data/
+9. models/
+10. public/
+11. public/images/
+
+
+═════════════════════════════════════════════════════════════════════════════════
+FILE LOCATION EXAMPLES
+═════════════════════════════════════════════════════════════════════════════════
+
+CORRECT locations:
+✓ /path/to/project/backend/run.py
+✓ /path/to/project/backend/app/models.py
+✓ /path/to/project/backend/app/routes/auth_routes.py
+✓ /path/to/project/frontend/index.html
+✓ /path/to/project/frontend/css/style.css
+✓ /path/to/project/frontend/js/config.js
+
+WRONG locations (don't do this):
+✗ /path/to/project/run.py              (should be in backend/)
+✗ /path/to/project/models.py           (should be in backend/app/)
+✗ /path/to/project/index.html          (should be in frontend/)
+✗ /path/to/project/style.css           (should be in frontend/css/)
+
+
+═════════════════════════════════════════════════════════════════════════════════
+QUICK VERIFICATION
+═════════════════════════════════════════════════════════════════════════════════
+
+After creating all folders and files, verify by checking:
+
+1. backend/app/models.py exists?        ☐
+2. frontend/css/style.css exists?       ☐
+3. backend/app/routes/ folder exists?   ☐
+4. frontend/js/ folder has 5 files?     ☐
+5. Can you see all 24 files?            ☐
+
+If YES to all, you're ready to run!
+
+
+═════════════════════════════════════════════════════════════════════════════════
+NEXT STEPS
+═════════════════════════════════════════════════════════════════════════════════
+
+1. ✓ Create all folders listed above
+2. ✓ Copy all 24 files to correct locations
+3. ✓ Read MASTER_SETUP_GUIDE.md
+4. ✓ Follow the RUN STEPS section
+5. ✓ Open http://localhost:8000 in browser
+
+
+═════════════════════════════════════════════════════════════════════════════════
+RUN STEPS
+═════════════════════════════════════════════════════════════════════════════════
+
+Terminal 1 - Backend:
+  $ cd backend
+  $ python -m venv venv
+  $ source venv/bin/activate        (or venv\Scripts\activate on Windows)
+  $ pip install -r requirements.txt
+  $ python run.py
+  ✓ Wait for: "Running on http://127.0.0.1:5000"
+
+Terminal 2 - Frontend:
+  $ cd frontend
+  $ python -m http.server 8000
+  ✓ Wait for: "Serving HTTP on 0.0.0.0 port 8000"
+
+Browser:
+  Go to: http://localhost:8000
+  ✓ You should see the home page
+
+DONE! Application is running! 🎉
+
+
+═════════════════════════════════════════════════════════════════════════════════
+
+Need help? Check these files in order:
+1. This file (EXACT_STRUCTURE.txt) ← You are here
+2. MASTER_SETUP_GUIDE.md
+3. COPY_PASTE_CHECKLIST.txt
+4. START_HERE.md
