@@ -1,0 +1,195 @@
+GRIEVANCE HUB - PROJECT STRUCTURE
+================================
+
+grievanceptoj_realworld/
+│
+├── ============ BACKEND (Flask REST API) ============
+│
+├── backend/
+│   ├── app/
+│   │   ├── __init__.py                    ← Flask app factory & initialization
+│   │   ├── models.py                      ← SQLAlchemy ORM models (9 database tables)
+│   │   ├── utils.py                       ← Email, OTP, AI classification functions
+│   │   └── routes/
+│   │       ├── __init__.py
+│   │       ├── auth_routes.py             ← Login, OTP verification, sessions
+│   │       ├── complaint_routes.py        ← Submit, track, update complaints
+│   │       ├── admin_routes.py            ← Analytics, dashboard, complaint management
+│   │       └── zone_routes.py             ← Geographic data (zones, circles, areas)
+│   │
+│   ├── scripts/
+│   │   ├── __init__.py
+│   │   └── seed_db.py                     ← Initialize database with demo data
+│   │
+│   ├── run.py                             ← START HERE: python run.py
+│   ├── requirements.txt                   ← Python dependencies
+│   └── .env.example                       ← Environment variables template
+│
+│
+├── ============ FRONTEND (Vanilla HTML/CSS/JS) ============
+│
+├── frontend/
+│   ├── index.html                         ← Home/Landing page
+│   ├── submit-complaint.html              ← User complaint submission form
+│   ├── track-complaint.html               ← Track complaint status
+│   ├── admin-login.html                   ← Admin authentication
+│   ├── admin-dashboard.html               ← Admin panel & analytics
+│   │
+│   ├── css/
+│   │   └── style.css                      ← All styling (responsive, 900+ lines)
+│   │
+│   └── js/
+│       ├── config.js                      ← API base URL & utilities
+│       ├── submit-complaint.js            ← Form logic & validation
+│       ├── track-complaint.js             ← Search & tracking logic
+│       ├── admin-login.js                 ← Authentication logic
+│       └── admin-dashboard.js             ← Dashboard & analytics logic
+│
+│
+├── ============ DATA & MODELS ============
+│
+├── data/
+│   ├── grievance.db                       ← SQLite database (created at runtime)
+│   ├── complaints.json                    ← Sample complaint data
+│   └── otp_storage.json                   ← OTP records
+│
+├── models/
+│   ├── category_model.pkl                 ← Complaint category classifier
+│   ├── criticality_model.pkl              ← Complaint severity classifier
+│   ├── category_vectorizer.pkl            ← TF-IDF vectorizer
+│   ├── criticality_vectorizer.pkl         ← TF-IDF vectorizer
+│   ├── hybrid_lr.pkl                      ← Hybrid classification model
+│   ├── label_encoder.pkl                  ← Label encoding
+│   ├── tfidf_vectorizer.pkl               ← TF-IDF vectorizer
+│   ├── critical_keywords.pkl              ← Keywords dictionary
+│   └── base_nb.pkl                        ← Naive Bayes model
+│
+├── public/
+│   ├── placeholder-logo.png
+│   ├── placeholder-logo.svg
+│   ├── placeholder-user.jpg
+│   └── placeholder.svg
+│
+│
+├── ============ DOCUMENTATION ============
+│
+├── README.md                              ← Project overview & features
+├── SETUP.md                               ← Detailed setup instructions
+├── QUICKSTART.md                          ← 5-minute quick start
+├── FOLDER_STRUCTURE.md                    ← This detailed folder guide
+├── RESTRUCTURING_SUMMARY.md               ← Architecture explanation
+├── FILE_MANIFEST.md                       ← Complete file descriptions
+├── MIGRATION_CHECKLIST.md                 ← Verification checklist
+└── PROJECT_TREE.txt                       ← This ASCII tree view
+
+
+═══════════════════════════════════════════════════════════════
+QUICK START IN 3 COMMANDS
+═══════════════════════════════════════════════════════════════
+
+1. START BACKEND:
+   cd backend && python -m venv venv && source venv/bin/activate && pip install -r requirements.txt && python run.py
+
+2. START FRONTEND (in another terminal):
+   cd frontend && python -m http.server 8000
+
+3. OPEN BROWSER:
+   http://localhost:8000
+
+
+═══════════════════════════════════════════════════════════════
+FILE SUMMARY
+═══════════════════════════════════════════════════════════════
+
+BACKEND FILES:
+  Python Files:        10 files (~2,000 lines)
+  Purpose:             REST API server, database, authentication
+
+FRONTEND FILES:
+  HTML Files:          5 pages
+  CSS Files:           1 stylesheet (900+ lines)
+  JavaScript Files:    5 modules (~1,500 lines)
+  Purpose:             User interface, admin dashboard
+
+TOTAL PROJECT:
+  ~15 backend files (Python)
+  ~11 frontend files (HTML/CSS/JS)
+  ~7 documentation files
+  ML models included for classification
+
+
+═══════════════════════════════════════════════════════════════
+DATABASE SCHEMA (9 TABLES)
+═══════════════════════════════════════════════════════════════
+
+1. users                - End users submitting complaints
+2. complaints           - Submitted grievances/complaints
+3. zones                - Geographic zones (regions)
+4. circles              - Geographic circles within zones
+5. areas                - Geographic areas within circles
+6. admins               - Admin users (super, sub, department)
+7. admin_sessions       - Active admin sessions
+8. location_logs        - User location tracking
+9. otp_storage          - One-time passwords for verification
+
+
+═══════════════════════════════════════════════════════════════
+API ENDPOINTS (SUMMARY)
+═══════════════════════════════════════════════════════════════
+
+AUTHENTICATION:
+  POST   /api/auth/login              - Admin login
+  POST   /api/auth/verify-otp         - Verify OTP
+  POST   /api/auth/logout             - Logout
+  GET    /api/auth/user               - Current user
+
+COMPLAINTS:
+  POST   /api/complaints              - Submit complaint
+  GET    /api/complaints              - List complaints
+  GET    /api/complaints/<id>         - Get details
+  GET    /api/complaints/<id>/status  - Get status
+  PUT    /api/complaints/<id>/status  - Update status
+  DELETE /api/complaints/<id>         - Delete
+
+ADMIN:
+  GET    /api/admin/dashboard         - Dashboard stats
+  GET    /api/admin/analytics         - Analytics data
+  GET    /api/admin/complaints        - Complaint list
+
+ZONES:
+  GET    /api/zones                   - All zones
+  GET    /api/zones/<id>/circles      - Zone circles
+  GET    /api/circles/<id>/areas      - Circle areas
+
+
+═══════════════════════════════════════════════════════════════
+TEST CREDENTIALS
+═══════════════════════════════════════════════════════════════
+
+Super Admin:
+  Email:    superadmin@grievancehub.com
+  Password: SuperAdmin@123
+
+Sub Admin:
+  Email:    subadmin_zone1@grievancehub.com
+  Password: SubAdmin@123
+
+Dept Admin:
+  Email:    deptadmin_circle1@grievancehub.com
+  Password: DeptAdmin@123
+
+
+═══════════════════════════════════════════════════════════════
+PORTS & URLs
+═══════════════════════════════════════════════════════════════
+
+Backend Server:       http://localhost:5000
+Frontend Server:      http://localhost:8000
+Home Page:            http://localhost:8000/index.html
+Submit Complaint:     http://localhost:8000/submit-complaint.html
+Track Complaint:      http://localhost:8000/track-complaint.html
+Admin Login:          http://localhost:8000/admin-login.html
+Admin Dashboard:      http://localhost:8000/admin-dashboard.html (after login)
+
+
+═══════════════════════════════════════════════════════════════
