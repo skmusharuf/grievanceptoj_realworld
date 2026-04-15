@@ -1,0 +1,407 @@
+================================================================================
+                        ARCHITECTURE OVERVIEW
+        How Your Grievance Management System Works (Simplified)
+================================================================================
+
+
+USER'S BROWSER
+===============
+
+    Home Page (/)
+    ├── Loads: index.html
+    ├── Styles: home.css + styles.css
+    ├── Scripts: main.js
+    └── Shows: Hero, Features, CTA Buttons
+
+    Submit Complaint (/submit-complaint)
+    ├── Loads: submit-complaint.html
+    ├── Styles: forms.css + styles.css
+    ├── Scripts: main.js, voice-input.js, form-handler.js
+    ├── Features:
+    │   ├── Text input fields
+    │   ├── Voice input (Web Speech API)
+    │   ├── Language selector (EN/HI/TE)
+    │   └── Form validation
+    └── On Submit:
+        └── JavaScript calls → POST /api/complaints/submit → Backend
+
+    Track Complaint (/track)
+    ├── Loads: track.html
+    ├── Styles: forms.css + styles.css
+    ├── Scripts: main.js, tracking.js
+    └── On Search:
+        └── JavaScript calls → POST /api/complaints/track → Backend
+
+    Admin Login (/admin/login)
+    ├── Loads: admin-login.html
+    ├── Styles: forms.css + styles.css
+    ├── Scripts: main.js, admin-login.js
+    ├── Step 1: Enter Email
+    │   └── Calls → POST /api/auth/send-otp
+    └── Step 2: Enter OTP
+        └── Calls → POST /api/auth/verify-otp
+            └── Stores session token in localStorage
+
+    Admin Dashboard (/admin/dashboard)
+    ├── Loads: admin-dashboard.html
+    ├── Styles: admin.css + styles.css
+    ├── Scripts: main.js, admin.js, Chart.js
+    ├── Features:
+    │   ├── Complaint table
+    │   ├── Filtering (department, status, zone, search)
+    │   ├── Charts (category pie, status doughnut)
+    │   ├── Statistics cards
+    │   └── Complaint details modal
+    └── Calls:
+        ├── GET /api/admin/complaints
+        ├── GET /api/admin/departments
+        ├── GET /api/zones
+        ├── PUT /api/admin/complaints/{id} (status update)
+        └── All with session token validation
+
+
+FLASK BACKEND
+=============
+
+    Flask App (app/__init__.py)
+    ├── Initializes Flask app
+    ├── Configures static/template folders
+    ├── Registers all blueprints
+    └── Enables CORS
+
+    Page Routes (routes/pages.py) ← NEW
+    ├── @app.route('/') → render_template('index.html')
+    ├── @app.route('/submit-complaint') → render_template('submit-complaint.html')
+    ├── @app.route('/track') → render_template('track.html')
+    ├── @app.route('/admin/login') → render_template('admin-login.html')
+    └── @app.route('/admin/dashboard') → render_template('admin-dashboard.html')
+
+    API Routes (routes/*.py) ← EXISTING
+    ├── Auth Routes (auth.py)
+    │   ├── POST /api/auth/send-otp
+    │   └── POST /api/auth/verify-otp
+    ├── Complaint Routes (complaints.py)
+    │   ├── POST /api/complaints/submit
+    │   └── POST /api/complaints/track
+    ├── Admin Routes (admin.py)
+    │   ├── GET /api/admin/complaints
+    │   ├── GET /api/admin/departments
+    │   └── PUT /api/admin/complaints/{id}
+    ├── Zone Routes (zones.py)
+    │   └── GET /api/zones
+    └── Category Routes (categories.py)
+        └── GET /api/categories
+
+    Services (services/) ← EXISTING
+    ├── Email Service (sends OTP emails)
+    ├── Classification Service (AI categorization)
+    ├── Translation Service (Gemini API)
+    └── Auth Service (OTP validation)
+
+    Models (models/) ← EXISTING
+    ├── Database operations
+    ├── Complaint queries
+    ├── Admin queries
+    └── OTP operations
+
+    Database (SQLite)
+    ├── Users table
+    ├── Admins table
+    ├── Complaints table
+    ├── OTP tokens table
+    ├── Zones table
+    ├── Categories table
+    └── All original schema
+
+
+DATA FLOW: SUBMITTING A COMPLAINT
+==================================
+
+1. User fills form in browser
+   │
+2. JavaScript validates form fields
+   │
+3. User clicks "Submit Complaint"
+   │
+4. JavaScript calls: GrievanceHub.apiCall('/complaints/submit', 'POST', data)
+   │
+5. Browser sends: POST request to Flask backend
+   │
+6. Flask receives: Request in complaints.py route
+   │
+7. Backend validates: Input validation
+   │
+8. Backend processes:
+   ├── Stores complaint in database
+   ├── Classification service: Categorizes complaint
+   ├── Sends email confirmation
+   └── Generates complaint ID
+   │
+9. Flask returns: {success: true, complaint_id: "CMP123456"}
+   │
+10. JavaScript receives response
+   │
+11. Browser shows: Success message with complaint ID
+   │
+12. User redirected to: /track?id=CMP123456
+
+
+DATA FLOW: VOICE INPUT
+======================
+
+1. User clicks "Start Voice Input" button
+   │
+2. voice-input.js initializes Web Speech API
+   ├── Creates SpeechRecognition instance
+   ├── Sets language (en-IN, hi-IN, or te-IN)
+   └── Enables continuous listening
+   │
+3. User speaks into microphone
+   │
+4. Browser captures audio
+   │
+5. Web Speech API processes audio
+   ├── Recognizes speech
+   ├── Converts to text
+   └── Returns transcribed text
+   │
+6. JavaScript receives text
+   │
+7. Text appended to: <textarea id="description">
+   │
+8. User can:
+   ├── Continue speaking (more text appended)
+   ├── Stop voice (click button again)
+   ├── Edit text manually
+   └── Submit form normally
+
+
+DATA FLOW: ADMIN DASHBOARD
+==========================
+
+1. User visits /admin/login
+   │
+2. JavaScript checks: Is session token in localStorage?
+   ├── No → Show login page
+   └── Yes → Redirect to dashboard
+   │
+3. User enters email
+   │
+4. User clicks "Send OTP"
+   │
+5. JavaScript calls: POST /api/auth/send-otp
+   │
+6. Backend:
+   ├── Validates email (is admin?)
+   ├── Generates 6-digit OTP
+   ├── Saves to database
+   └── Sends OTP email
+   │
+7. User receives OTP in email
+   │
+8. User enters OTP
+   │
+9. User clicks "Verify OTP"
+   │
+10. JavaScript calls: POST /api/auth/verify-otp
+    │
+11. Backend:
+    ├── Validates OTP
+    ├── Creates session token
+    └── Returns admin info
+    │
+12. JavaScript stores:
+    ├── Session token in localStorage
+    └── Admin info in localStorage
+    │
+13. User redirected to: /admin/dashboard
+    │
+14. Dashboard loads complaint data:
+    ├── JavaScript calls: GET /api/admin/complaints
+    ├── Backend returns: All complaints
+    └── JavaScript displays in table
+    │
+15. User can:
+    ├── Filter by department, status, zone, search
+    ├── View complaint details (modal)
+    ├── Update complaint status
+    └── See charts and statistics
+
+
+STATIC FILES SERVING
+====================
+
+Flask serves static files:
+
+/static/css/
+├── styles.css → Applied to all pages
+├── home.css → Only on home page
+├── forms.css → On form pages
+└── admin.css → On admin pages
+
+/static/js/
+├── main.js → Loaded on all pages
+├── voice-input.js → Loaded on submit-complaint page
+├── form-handler.js → Loaded on submit-complaint page
+├── tracking.js → Loaded on track page
+├── admin-login.js → Loaded on admin-login page
+└── admin.js → Loaded on admin-dashboard page
+
+
+CSS VARIABLE SYSTEM
+===================
+
+styles.css defines variables:
+
+:root {
+  --primary: #3b82f6;           (Button color)
+  --bg-primary: #0f172a;        (Page background)
+  --bg-secondary: #1e293b;      (Card background)
+  --text-white: #ffffff;        (Main text)
+  --text-light: #cbd5e1;        (Secondary text)
+  --text-muted: #94a3b8;        (Muted text)
+  --success: #10b981;           (Success color)
+  --danger: #ef4444;            (Error color)
+}
+
+Used everywhere:
+
+.button { background: var(--primary); }
+.card { background: var(--bg-secondary); }
+.text { color: var(--text-light); }
+
+Change one variable → Changes everywhere!
+
+
+JAVASCRIPT MODULE ORGANIZATION
+================================
+
+main.js (Global utilities)
+├── apiCall() → Makes all API requests
+├── showError() → Display error messages
+├── hideError() → Hide error messages
+├── formatDate() → Format dates
+├── getAdminToken() → Get session
+├── setAdminToken() → Save session
+├── clearAdminSession() → Logout
+├── isAdminAuthenticated() → Check auth
+└── Other helpers
+
+voice-input.js (Voice recognition)
+├── initializeVoiceInput()
+├── startListening()
+├── stopListening()
+├── handleVoiceError()
+└── Web Speech API integration
+
+form-handler.js (Form submission)
+├── initializeFormHandler()
+├── validateForm()
+├── validateField()
+├── getFormData()
+├── handleComplaintSubmit()
+└── Form logic
+
+tracking.js (Complaint tracking)
+├── initializeTracking()
+├── handleTrackComplaint()
+├── displayComplaintDetails()
+├── updateTimeline()
+└── Tracking logic
+
+admin-login.js (OTP login)
+├── initializeAdminLogin()
+├── handleSendOtp()
+├── handleVerifyOtp()
+├── showEmailStep()
+├── showOtpStep()
+└── Login flow
+
+admin.js (Dashboard)
+├── initializeAdminDashboard()
+├── loadDashboardData()
+├── applyFilters()
+├── displayComplaints()
+├── viewComplaintDetails()
+├── updateComplaintStatus()
+├── updateCharts()
+└── Dashboard logic
+
+
+ERROR HANDLING
+==============
+
+Frontend Error Handling:
+├── Try-catch blocks around API calls
+├── Validate form before submission
+├── Show error messages to user
+├── Log errors to console
+└── Retry logic for failures
+
+Backend Error Handling:
+├── Input validation
+├── Try-except blocks
+├── Return error JSON
+├── Log to server logs
+└── HTTP status codes
+
+
+SESSION MANAGEMENT
+==================
+
+localStorage stores:
+├── adminSessionToken (from backend)
+├── adminInfo (admin name, role, etc)
+
+On page load:
+├── Check if token exists in localStorage
+├── If no → Redirect to /admin/login
+├── If yes → Proceed to dashboard
+
+On logout:
+├── Clear both from localStorage
+├── Redirect to login page
+
+API calls include:
+└── Session token in request headers
+
+
+DEPLOYMENT
+==========
+
+Development:
+    python run.py
+    → Flask runs on http://localhost:5000/
+
+Production:
+    gunicorn app:create_app()
+    → Or any Python WSGI server
+
+
+================================================================================
+                            SUMMARY
+================================================================================
+
+Your grievance management system now uses:
+
+Frontend:
+  ✓ Plain HTML templates (Jinja2)
+  ✓ Plain CSS with variables
+  ✓ Vanilla JavaScript modules
+  ✓ Web Speech API for voice
+
+Backend:
+  ✓ Flask routes
+  ✓ Existing services (unchanged)
+  ✓ SQLite database (unchanged)
+  ✓ All business logic (unchanged)
+
+Communication:
+  ✓ REST API (JSON)
+  ✓ Fetch API in JavaScript
+  ✓ Session tokens in localStorage
+
+No React, no TypeScript, no build process. Just simple web technologies
+working together to create a fully functional grievance system.
+
+================================================================================

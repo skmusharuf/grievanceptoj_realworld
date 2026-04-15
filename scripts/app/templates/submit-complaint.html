@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}Submit Complaint - GrievanceHub{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="form-header">
+        <a href="/" class="back-link">← Back to Home</a>
+        <h1>Submit Your Complaint</h1>
+        <p>Describe your complaint in detail. You can type or use voice input.</p>
+    </div>
+
+    <form id="complaintForm" class="complaint-form">
+        <!-- Name Input -->
+        <div class="form-group">
+            <label for="name" class="form-label">Full Name *</label>
+            <input 
+                type="text" 
+                id="name" 
+                name="name" 
+                class="form-input"
+                placeholder="Enter your full name"
+                required
+            >
+        </div>
+
+        <!-- Email Input -->
+        <div class="form-group">
+            <label for="email" class="form-label">Email Address *</label>
+            <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                class="form-input"
+                placeholder="Enter your email"
+                required
+            >
+        </div>
+
+        <!-- Phone Input -->
+        <div class="form-group">
+            <label for="phone" class="form-label">Phone Number *</label>
+            <input 
+                type="tel" 
+                id="phone" 
+                name="phone" 
+                class="form-input"
+                placeholder="Enter your phone number"
+                required
+            >
+        </div>
+
+        <!-- Address Input -->
+        <div class="form-group">
+            <label for="address" class="form-label">Full Address *</label>
+            <input 
+                type="text" 
+                id="address" 
+                name="address" 
+                class="form-input"
+                placeholder="Enter your complete address"
+                required
+            >
+        </div>
+
+        <!-- Zone Selection -->
+        <div class="form-group">
+            <label for="zone" class="form-label">Zone *</label>
+            <select id="zone" name="zone" class="form-select" required>
+                <option value="">Select a zone</option>
+            </select>
+        </div>
+
+        <!-- Language Selection -->
+        <div class="form-group">
+            <label class="form-label">Language for Voice Input</label>
+            <div class="language-buttons">
+                <button type="button" class="lang-btn active" data-lang="en-IN">English</button>
+                <button type="button" class="lang-btn" data-lang="hi-IN">हिंदी</button>
+                <button type="button" class="lang-btn" data-lang="te-IN">తెలుగు</button>
+            </div>
+        </div>
+
+        <!-- Description Input -->
+        <div class="form-group">
+            <label for="description" class="form-label">Complaint Description *</label>
+            <textarea 
+                id="description" 
+                name="description" 
+                class="form-textarea"
+                placeholder="Describe your complaint in detail... (Type or use voice input)"
+                rows="6"
+                required
+            ></textarea>
+            <p class="form-hint" id="listeningHint" style="display: none;">
+                <span class="pulse-dot"></span> Listening in <span id="currentLang">English</span>...
+            </p>
+        </div>
+
+        <!-- Voice Input Controls -->
+        <div class="voice-controls">
+            <button type="button" id="voiceBtn" class="btn btn-voice">
+                🎤 Start Voice Input
+            </button>
+            <span id="voiceStatus" class="voice-status"></span>
+        </div>
+
+        <!-- Error Messages -->
+        <div id="errorAlert" class="alert alert-error" style="display: none;">
+            <span id="errorMessage"></span>
+        </div>
+
+        <!-- Info Alert -->
+        <div class="alert alert-info">
+            <span>ℹ️ No need to select a category - our AI will automatically classify your complaint and assign priority.</span>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary btn-large">
+            Submit Complaint
+        </button>
+    </form>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/voice-input.js') }}"></script>
+<script src="{{ url_for('static', filename='js/form-handler.js') }}"></script>
+<script>
+    // Load zones on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        loadZones();
+        initializeVoiceInput();
+        initializeFormHandler();
+    });
+
+    function loadZones() {
+        fetch('/api/zones')
+            .then(response => response.json())
+            .then(data => {
+                const zoneSelect = document.getElementById('zone');
+                data.zones.forEach(zone => {
+                    const option = document.createElement('option');
+                    option.value = zone.id;
+                    option.textContent = `${zone.zone_number} - ${zone.zone_name}`;
+                    zoneSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error loading zones:', error));
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}Track Complaint - GrievanceHub{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="form-header">
+        <a href="/" class="back-link">← Back to Home</a>
+        <h1>Track Your Complaint</h1>
+        <p>Enter your complaint ID, email, and OTP to check the status</p>
+    </div>
+
+    <!-- Search Form -->
+    <div class="card">
+        <div class="card-header">
+            <h2>Search Complaint</h2>
+            <p>Enter your complaint details to track status</p>
+        </div>
+        <div class="card-content">
+            <div class="form-group">
+                <label for="complaintId" class="form-label">Complaint ID *</label>
+                <input 
+                    type="text" 
+                    id="complaintId" 
+                    placeholder="e.g., CMP00818268"
+                    class="form-input"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="trackEmail" class="form-label">Email Address *</label>
+                <input 
+                    type="email" 
+                    id="trackEmail" 
+                    placeholder="Enter your email"
+                    class="form-input"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="otp" class="form-label">OTP *</label>
+                <input 
+                    type="text" 
+                    id="otp" 
+                    placeholder="OTP sent to your email"
+                    class="form-input"
+                    required
+                >
+            </div>
+
+            <div id="trackError" class="alert alert-error" style="display: none;">
+                <span id="trackErrorMessage"></span>
+            </div>
+
+            <button id="trackBtn" class="btn btn-primary btn-large">
+                🔍 Track Complaint
+            </button>
+        </div>
+    </div>
+
+    <!-- Complaint Details (shown after search) -->
+    <div id="complaintDetails" class="card" style="display: none;">
+        <div class="card-header">
+            <div class="header-with-badge">
+                <h2>Complaint Details</h2>
+                <span id="statusBadge" class="badge"></span>
+            </div>
+        </div>
+        <div class="card-content">
+            <!-- Details Grid -->
+            <div class="details-grid">
+                <div class="detail-item">
+                    <p class="detail-label">Complaint ID</p>
+                    <p class="detail-value" id="displayId"></p>
+                </div>
+                <div class="detail-item">
+                    <p class="detail-label">Category</p>
+                    <p class="detail-value" id="displayCategory"></p>
+                </div>
+                <div class="detail-item">
+                    <p class="detail-label">Criticality</p>
+                    <span class="badge" id="displayCriticality"></span>
+                </div>
+                <div class="detail-item">
+                    <p class="detail-label">Status</p>
+                    <p class="detail-value" id="displayStatus"></p>
+                </div>
+                <div class="detail-item">
+                    <p class="detail-label">Submitted On</p>
+                    <p class="detail-value" id="displayCreated"></p>
+                </div>
+                <div class="detail-item">
+                    <p class="detail-label">Last Updated</p>
+                    <p class="detail-value" id="displayUpdated"></p>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="description-section">
+                <p class="detail-label">Description</p>
+                <div class="description-box" id="displayDescription"></div>
+            </div>
+
+            <!-- Critical Alert -->
+            <div id="criticalAlert" class="alert alert-warning" style="display: none;">
+                <span>⚠️ This complaint has been marked as CRITICAL and will be prioritized.</span>
+            </div>
+
+            <!-- Status Timeline -->
+            <div class="timeline-section">
+                <h3>Status Timeline</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-icon">✓</div>
+                        <div class="timeline-content">
+                            <p class="timeline-title">Complaint Submitted</p>
+                            <p class="timeline-date" id="timelineSubmitted"></p>
+                        </div>
+                    </div>
+                    
+                    <div id="inProgressTimeline" class="timeline-item" style="display: none;">
+                        <div class="timeline-icon">⏳</div>
+                        <div class="timeline-content">
+                            <p class="timeline-title">Under Review</p>
+                            <p class="timeline-date">Department is working on your complaint</p>
+                        </div>
+                    </div>
+
+                    <div id="resolvedTimeline" class="timeline-item" style="display: none;">
+                        <div class="timeline-icon">✅</div>
+                        <div class="timeline-content">
+                            <p class="timeline-title">Resolved</p>
+                            <p class="timeline-date" id="timelineResolved"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/tracking.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeTracking();
+    });
+</script>
+{% endblock %}

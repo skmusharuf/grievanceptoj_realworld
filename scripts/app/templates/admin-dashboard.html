@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - GrievanceHub{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Admin Header -->
+    <div class="admin-header">
+        <div class="header-info">
+            <h1>Admin Dashboard</h1>
+            <p id="adminName">Loading...</p>
+        </div>
+        <button id="logoutBtn" class="btn btn-danger">Logout</button>
+    </div>
+
+    <!-- Dashboard Grid -->
+    <div class="dashboard-grid">
+        <!-- Filters Section -->
+        <aside class="filters-panel">
+            <div class="filter-group">
+                <h3>Filters</h3>
+                
+                <div class="filter-item">
+                    <label class="filter-label">Department</label>
+                    <select id="departmentFilter" class="filter-select">
+                        <option value="all">All Departments</option>
+                    </select>
+                </div>
+
+                <div class="filter-item">
+                    <label class="filter-label">Status</label>
+                    <select id="statusFilter" class="filter-select">
+                        <option value="all">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="in_progress">In Progress</option>
+                        <option value="resolved">Resolved</option>
+                    </select>
+                </div>
+
+                <div class="filter-item">
+                    <label class="filter-label">Zone</label>
+                    <select id="zoneFilter" class="filter-select">
+                        <option value="all">All Zones</option>
+                    </select>
+                </div>
+
+                <div class="filter-item">
+                    <label class="filter-label">Search</label>
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        class="filter-input"
+                        placeholder="Search by ID or name..."
+                    >
+                </div>
+
+                <button id="applyFiltersBtn" class="btn btn-primary">Apply Filters</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <!-- Stats Section -->
+            <div class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-label">Total Complaints</div>
+                    <div class="stat-value" id="totalComplaints">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Pending</div>
+                    <div class="stat-value pending" id="pendingComplaints">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">In Progress</div>
+                    <div class="stat-value inprogress" id="inProgressComplaints">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Resolved</div>
+                    <div class="stat-value resolved" id="resolvedComplaints">0</div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="charts-section">
+                <div class="chart-container">
+                    <h3>Complaints by Category</h3>
+                    <canvas id="categoryChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Status Distribution</h3>
+                    <canvas id="statusChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Complaints Table -->
+            <div class="table-section">
+                <div class="table-header">
+                    <h3>Recent Complaints</h3>
+                    <div class="table-actions">
+                        <button id="refreshBtn" class="btn btn-small">Refresh</button>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table id="complaintsTable" class="complaints-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Criticality</th>
+                                <th>Zone</th>
+                                <th>Submitted</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <tr>
+                                <td colspan="8" style="text-align: center; padding: 20px;">Loading complaints...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Complaint Details Modal -->
+<div id="detailsModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Complaint Details</h2>
+            <button type="button" class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="details-grid">
+                <div class="detail-item">
+                    <label>ID</label>
+                    <p id="modalId"></p>
+                </div>
+                <div class="detail-item">
+                    <label>Name</label>
+                    <p id="modalName"></p>
+                </div>
+                <div class="detail-item">
+                    <label>Email</label>
+                    <p id="modalEmail"></p>
+                </div>
+                <div class="detail-item">
+                    <label>Phone</label>
+                    <p id="modalPhone"></p>
+                </div>
+                <div class="detail-item">
+                    <label>Category</label>
+                    <p id="modalCategory"></p>
+                </div>
+                <div class="detail-item">
+                    <label>Status</label>
+                    <select id="modalStatus" class="form-select">
+                        <option value="pending">Pending</option>
+                        <option value="in_progress">In Progress</option>
+                        <option value="resolved">Resolved</option>
+                    </select>
+                </div>
+                <div class="detail-item full-width">
+                    <label>Description</label>
+                    <p id="modalDescription" class="description-text"></p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="updateStatusBtn" class="btn btn-primary">Update Status</button>
+            <button type="button" id="closeModalBtn" class="btn btn-secondary">Close</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeAdminDashboard();
+    });
+</script>
+{% endblock %}

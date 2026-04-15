@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}GrievanceHub - Your Voice Matters{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h1 class="hero-title">Your Voice Matters</h1>
+        <p class="hero-subtitle">
+            Submit grievances easily, track progress in real-time, and get resolutions faster 
+            with our intelligent redressal system.
+        </p>
+        <div class="hero-buttons">
+            <a href="/submit-complaint" class="btn btn-primary">
+                Submit Complaint →
+            </a>
+            <a href="/track" class="btn btn-secondary">
+                Track Complaint
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features">
+    <div class="container">
+        <div class="features-grid">
+            <!-- Feature 1 -->
+            <div class="feature-card">
+                <div class="feature-icon">📝</div>
+                <h3 class="feature-title">Easy Submission</h3>
+                <p class="feature-description">
+                    Submit complaints with text or voice in multiple languages
+                </p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3 class="feature-title">Smart Classification</h3>
+                <p class="feature-description">
+                    AI-powered categorization and priority detection
+                </p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3 class="feature-title">Real-time Tracking</h3>
+                <p class="feature-description">
+                    Monitor your complaint status anytime, anywhere
+                </p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3 class="feature-title">Secure & Private</h3>
+                <p class="feature-description">
+                    OTP verification and encrypted data storage
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">10,000+</div>
+                <p class="stat-label">Complaints Resolved</p>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">98%</div>
+                <p class="stat-label">Satisfaction Rate</p>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <p class="stat-label">Support Available</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
