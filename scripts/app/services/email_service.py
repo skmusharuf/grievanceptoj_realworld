@@ -19,15 +19,30 @@ def send_email(to_email, subject, body):
         msg['Subject'] = subject
         msg.attach(MIMEText(body, 'plain'))
         
-        server = smtplib.SMTP(EMAIL_HOST, EMAIL_PORT)
+        # Fix: Add timeout and proper error handling
+        server = smtplib.SMTP(EMAIL_HOST, EMAIL_PORT, timeout=10)
         server.starttls()
-        server.login(EMAIL_USER, EMAIL_PASSWORD)
+        
+        # Strip whitespace from password (common issue with .env files)
+        password = EMAIL_PASSWORD.strip() if isinstance(EMAIL_PASSWORD, str) else EMAIL_PASSWORD
+        server.login(EMAIL_USER.strip(), password)
+        
         text = msg.as_string()
         server.sendmail(EMAIL_FROM, to_email, text)
         server.quit()
         
         print(f"[v0] Email sent successfully to {to_email}")
         return True
+    
+    except smtplib.SMTPAuthenticationError as e:
+        print(f"[v0] Email Authentication Error: Check your EMAIL_USER and EMAIL_PASSWORD in .env")
+        print(f"[v0] If using Gmail, use App Password (https://myaccount.google.com/apppasswords)")
+        print(f"[v0] Error: {e}")
+        return False
+    
+    except smtplib.SMTPException as e:
+        print(f"[v0] SMTP Error: {e}")
+        return False
     
     except Exception as e:
         print(f"[v0] Error sending email: {e}")
